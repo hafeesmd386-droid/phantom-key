@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f4ef">
+    <meta name="description" content="Protect and restore files with Phantom Key in your browser.">
+    <title>Phantom Key | Browser Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-grid" aria-hidden="true"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Phantom Key home">
+          <span class="brand-mark" aria-hidden="true">P<span>K</span></span>
+          <span class="brand-name">PHANTOM<span>KEY</span></span>
+        </a>
+        <div class="topbar-meta">
+          <span class="edition">BROWSER EDITION <b>01</b></span>
+          <span class="local-status" id="runtimeStatus"><i></i><span>CHECKING CRYPTO</span></span>
+        </div>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="pageTitle">
+          <div>
+            <p class="eyebrow">PERSONAL FILE VAULT <span> / </span> NO. 001</p>
+            <h1 id="pageTitle">Phantom Key<span class="title-period">.</span></h1>
+          </div>
+          <div class="format-stamp" aria-label="Phantom Key file format version 1">
+            <span>FILE FORMAT</span>
+            <strong>PHKEY / 01</strong>
+          </div>
+        </section>
+
+        <section class="workspace" aria-label="File protection workspace">
+          <div class="workbench">
+            <div class="mode-bar" role="tablist" aria-label="File operation">
+              <button class="mode-tab is-active" id="protectTab" type="button" role="tab" aria-selected="true" data-mode="protect">Protect</button>
+              <button class="mode-tab" id="restoreTab" type="button" role="tab" aria-selected="false" data-mode="restore">Restore</button>
+              <button class="mode-tab" id="verifyTab" type="button" role="tab" aria-selected="false" data-mode="verify">Verify</button>
+            </div>
+
+            <div class="workbench-body">
+              <div class="operation-heading">
+                <div>
+                  <p class="eyebrow" id="operationIndex">OPERATION 01</p>
+                  <h2 id="operationTitle">Protect a file</h2>
+                </div>
+                <span class="crypto-chip">AES-128 <b>+</b> HMAC-SHA256</span>
+              </div>
+
+              <div class="drop-zone" id="dropZone" role="group" aria-label="File selection area">
+                <input id="fileInput" type="file" hidden>
+                <span class="file-glyph" aria-hidden="true"><span></span><i></i></span>
+                <div class="drop-copy">
+                  <strong id="dropTitle">Choose a file to protect</strong>
+                  <span id="dropSubtitle">Any file type <b>·</b> Up to 128 MB</span>
+                </div>
+                <button class="button button-outline" id="chooseFile" type="button">Browse files</button>
+              </div>
+
+              <div class="selected-file" id="selectedFile" hidden>
+                <span class="selected-file-icon" aria-hidden="true">FILE</span>
+                <span class="file-details"><strong id="selectedName"></strong><small id="selectedMeta"></small></span>
+                <button class="remove-file" id="removeFile" type="button" aria-label="Remove selected file" title="Remove file">×</button>
+              </div>
+
+              <div class="password-section">
+                <div class="field-heading">
+                  <label for="passwordInput">Passphrase</label>
+                  <button class="text-button" id="generatePassword" type="button">Generate <span aria-hidden="true">↗</span></button>
+                </div>
+                <div class="password-control">
+                  <input id="passwordInput" type="password" autocomplete="new-password" placeholder="Enter a strong passphrase" spellcheck="false">
+                  <button class="reveal-button" id="revealPassword" type="button" aria-label="Show passphrase" title="Show passphrase"><span aria-hidden="true">◉</span></button>
+                </div>
+                <div class="strength-row" aria-live="polite">
+                  <div class="strength-track" id="strengthTrack" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                  <span id="strengthLabel">NO PASSPHRASE</span>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <span class="operation-note" id="operationNote">PBKDF2-SHA256 <b>·</b> 600,000 rounds</span>
+                <button class="button button-primary" id="processButton" type="button" disabled>
+                  <span id="processLabel">Protect file</span><span aria-hidden="true">↗</span>
+                </button>
+              </div>
+
+              <div class="result" id="result" role="status" aria-live="polite" hidden></div>
+            </div>
+          </div>
+
+          <aside class="side-rail" aria-label="Session details">
+            <div class="rail-block">
+              <p class="eyebrow">SESSION</p>
+              <div class="session-state"><span class="state-light"></span><strong id="sessionLabel">READY</strong></div>
+              <p class="rail-value" id="sessionDetail">No file selected</p>
+            </div>
+            <div class="rail-rule"></div>
+            <div class="rail-block">
+              <p class="eyebrow">CRYPTOGRAPHY</p>
+              <dl class="spec-list">
+                <div><dt>Key derivation</dt><dd>PBKDF2</dd></div>
+                <div><dt>Digest</dt><dd>SHA-256</dd></div>
+                <div><dt>Work factor</dt><dd>600K</dd></div>
+                <div><dt>Envelope</dt><dd>FERNET</dd></div>
+              </dl>
+            </div>
+            <div class="rail-rule"></div>
+            <div class="rail-block privacy-block">
+              <p class="eyebrow">PROCESSING</p>
+              <p class="privacy-value"><span class="privacy-icon" aria-hidden="true">↳</span> THIS DEVICE</p>
+              <p class="rail-value">Files and passphrases are handled in this browser session.</p>
+            </div>
+            <footer class="rail-footer"><span>PHANTOM KEY</span><span>V 1.0</span></footer>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="page-footer">
+        <span>PHANTOM KEY <b>©</b> 2026</span>
+        <span>PBKDF2 / FERNET COMPATIBLE</span>
+      </footer>
+    </div>
+  </body>
+</html>
