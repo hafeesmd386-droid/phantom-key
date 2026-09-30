@@ -2,7 +2,7 @@
 A Python/Tkinter desktop app for protecting files with password-derived keys, authenticated encryption and integrity verification.
 
 ## Browser version
-The repository root also contains a static browser version for Vercel. Import this repository with the root as the project directory; no build command or output directory is required. Pushing to `main` triggers a new deployment when Git integration is enabled.
+The repository root also contains a static browser version for Vercel. `vercel.json` selects the static “Other” preset and serves the repository root directly. Pushing to `main` triggers a new deployment when Git integration is enabled.
 
 The browser version uses the Web Crypto API and writes the same `.phkey` format as the desktop app. Files and passphrases are processed in the browser and are not uploaded by the app. Use it only from HTTPS or `localhost`; the browser edition supports files up to 128 MB.
 
